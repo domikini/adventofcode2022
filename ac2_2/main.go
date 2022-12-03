@@ -28,7 +28,6 @@ func ReadRow(row string) int {
 	return did_i_win + shape_point
 }
 
-// Function returns
 func DidIWin(row []string) int {
 	if row[0] == "A" && row[1] == "X" {
 		return 0

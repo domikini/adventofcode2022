@@ -74,14 +74,9 @@ func main() {
 	}
 
 	start_points := [][2]int{}
-
-	//S_step_row := 0
-	//S_step_column := 0
 	for i := 0; i < len(height_map); i++ {
 		for j := 0; j < len(height_map[i]); j++ {
 			if height_map[i][j].Elevation == 83 {
-				//S_step_row = i
-				//S_step_column = j
 				start_points = append(start_points, [2]int{i, j})
 			} else if height_map[i][j].Elevation == 97 {
 				start_points = append(start_points, [2]int{i, j})
@@ -89,7 +84,12 @@ func main() {
 		}
 	}
 
-	fmt.Println(start_points)
+	var path_lengths []int
+	for _, start_point := range start_points {
+		path_lengths = append(path_lengths, FindShortestPath(height_map, start_point[0], start_point[1]))
+	}
+
+	fmt.Println(findMinElement(path_lengths))
 }
 
 func FindShortestPath(height_map [41][147]Step, first_step_row int, first_step_column int) int {
@@ -152,4 +152,14 @@ found:
 		}
 	}
 	return path_length
+}
+
+func findMinElement(arr []int) int {
+	min_num := arr[0]
+	for i := 0; i < len(arr); i++ {
+		if arr[i] < min_num && arr[i] != 0 {
+			min_num = arr[i]
+		}
+	}
+	return min_num
 }

@@ -4,10 +4,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-<<<<<<< HEAD
-	"regexp"
-=======
->>>>>>> main
 	"strings"
 )
 
@@ -21,25 +17,6 @@ func main() {
 	content_split := strings.Split(string(content), "\n")
 	row_string := []string{}
 	for _, row := range content_split {
-<<<<<<< HEAD
-		fmt.Println(ReadRow(row))
-	}
-
-}
-
-func ReadRow(row string) string {
-	re := regexp.MustCompile(`(\$) (cd)(.*)`)
-	result := re.FindStringSubmatch(row)
-	if len(result) != 0 {
-		return result[0]
-	}
-	re = regexp.MustCompile(`(\$) (ls)`)
-	result = re.FindStringSubmatch(row)
-	if len(result) != 0 {
-		return result[0]
-	}
-	return ""
-=======
 		row_string = ReadRow(row)
 	}
 
@@ -47,14 +24,14 @@ func ReadRow(row string) string {
 	type void struct{}
 	var member void
 end:
-	for c := 0; c < len(row_string)-4; c++ {
-		compare_slice := row_string[c : c+4]
+	for c := 0; c < len(row_string)-14; c++ {
+		compare_slice := row_string[c : c+14]
 		set := make(map[string]void)
 		for _, character := range compare_slice {
 			set[character] = member
 		}
-		if len(set) == 4 {
-			character_count = c + 4
+		if len(set) == 14 {
+			character_count = c + 14
 			break end
 		}
 	}
@@ -65,5 +42,4 @@ end:
 
 func ReadRow(row string) []string {
 	return strings.Split(row, "")
->>>>>>> main
 }

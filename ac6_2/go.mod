@@ -1,4 +1,4 @@
-module domcha.se/ac6_1
+module domcha.se/ac6_2
 
 go 1.19
 

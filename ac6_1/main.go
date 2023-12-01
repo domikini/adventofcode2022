@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 	"regexp"
-	"strconv"
 	"strings"
 )
 
@@ -16,52 +15,23 @@ func main() {
 		log.Fatal(err)
 	}
 
-	stacks := InitialStacks()
-	fmt.Println(stacks)
-
 	content_split := strings.Split(string(content), "\n")
 	for _, row := range content_split {
-		amount, from, to := ReadRow(row)
-		// Minus 1 to match array indexes
-		stacks = Move(stacks, amount, from-1, to-1)
+		fmt.Println(ReadRow(row))
 	}
 
-	// Display last crate on each stack
-	for _, stack := range stacks {
-		fmt.Print(stack[len(stack)-1])
-	}
 }
 
-func InitialStacks() [][]string {
-	stack1 := []string{"W", "M", "L", "F"}
-	stack2 := []string{"B", "Z", "V", "M", "F"}
-	stack3 := []string{"H", "V", "R", "S", "L", "Q"}
-	stack4 := []string{"F", "S", "V", "Q", "P", "M", "T", "J"}
-	stack5 := []string{"L", "S", "W"}
-	stack6 := []string{"F", "V", "P", "M", "R", "J", "W"}
-	stack7 := []string{"J", "Q", "C", "P", "N", "R", "F"}
-	stack8 := []string{"V", "H", "P", "S", "Z", "W", "R", "B"}
-	stack9 := []string{"B", "M", "J", "C", "G", "H", "Z", "W"}
-	return [][]string{stack1, stack2, stack3, stack4, stack5, stack6, stack7, stack8, stack9}
-}
-
-func ReadRow(row string) (int, int, int) {
-	re := regexp.MustCompile(`(\d+).*(\d+).*(\d+)`)
+func ReadRow(row string) string {
+	re := regexp.MustCompile(`(\$) (cd)(.*)`)
 	result := re.FindStringSubmatch(row)
-	amount, _ := strconv.Atoi(result[1])
-	from, _ := strconv.Atoi(result[2])
-	to, _ := strconv.Atoi(result[3])
-	return amount, from, to
-}
-
-func Move(stacks [][]string, amount int, from int, to int) [][]string {
-	start_position := len(stacks[from]) - amount
-	stacks_to_move := stacks[from][start_position:]
-	rev_stacks_to_move := []string{}
-	for i := range stacks_to_move {
-		rev_stacks_to_move = append(rev_stacks_to_move, stacks_to_move[len(stacks_to_move)-1-i])
+	if len(result) != 0 {
+		return result[0]
 	}
-	stacks[to] = append(stacks[to], rev_stacks_to_move...)
-	stacks[from] = stacks[from][:start_position]
-	return stacks
+	re = regexp.MustCompile(`(\$) (ls)`)
+	result = re.FindStringSubmatch(row)
+	if len(result) != 0 {
+		return result[0]
+	}
+	return ""
 }
